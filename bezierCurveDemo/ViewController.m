@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "FLPopoverPresentationController.h"
 #import "FLAddProductController.h"
+#import "UIBezierPath+FLUnits.h"
+#import "FLBezierView.h"
 @interface ViewController ()<UIViewControllerTransitioningDelegate>
 
 @end
@@ -17,9 +19,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    imageView.image = [UIImage imageNamed:@"banner"];
-    [self.view addSubview:imageView];
+//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+//    imageView.image = [UIImage imageNamed:@"banner"];
+//    [self.view addSubview:imageView];
+    FLBezierView *beView = [[FLBezierView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 300)];
+    [self.view addSubview:beView];
+    
+    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

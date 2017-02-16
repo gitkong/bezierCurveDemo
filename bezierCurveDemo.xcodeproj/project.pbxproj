@@ -7,16 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3FE1AA541C45EDB300604EB4 /* FLPopoverPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE1AA531C45EDB300604EB4 /* FLPopoverPresentationController.m */; settings = {ASSET_TAGS = (); }; };
+		113CC4C61E557C5300574F1D /* UIBezierPath+FLUnits.m in Sources */ = {isa = PBXBuildFile; fileRef = 113CC4C51E557C5300574F1D /* UIBezierPath+FLUnits.m */; };
+		113CC4C91E5593A600574F1D /* FLBezierView.m in Sources */ = {isa = PBXBuildFile; fileRef = 113CC4C81E5593A600574F1D /* FLBezierView.m */; };
+		3FE1AA541C45EDB300604EB4 /* FLPopoverPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE1AA531C45EDB300604EB4 /* FLPopoverPresentationController.m */; };
 		3FFFC1E01C44964F009E5F65 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFFC1DF1C44964F009E5F65 /* main.m */; };
 		3FFFC1E31C44964F009E5F65 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFFC1E21C44964F009E5F65 /* AppDelegate.m */; };
 		3FFFC1E61C44964F009E5F65 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFFC1E51C44964F009E5F65 /* ViewController.m */; };
 		3FFFC1EB1C44964F009E5F65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FFFC1EA1C44964F009E5F65 /* Assets.xcassets */; };
-		3FFFC1F71C44970F009E5F65 /* FLBezierCurveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFFC1F61C44970F009E5F65 /* FLBezierCurveView.m */; settings = {ASSET_TAGS = (); }; };
-		3FFFC1FA1C44D235009E5F65 /* FLAddProductController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFFC1F91C44D235009E5F65 /* FLAddProductController.m */; settings = {ASSET_TAGS = (); }; };
+		3FFFC1F71C44970F009E5F65 /* FLBezierCurveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFFC1F61C44970F009E5F65 /* FLBezierCurveView.m */; };
+		3FFFC1FA1C44D235009E5F65 /* FLAddProductController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFFC1F91C44D235009E5F65 /* FLAddProductController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		113CC4C41E557C5300574F1D /* UIBezierPath+FLUnits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+FLUnits.h"; sourceTree = "<group>"; };
+		113CC4C51E557C5300574F1D /* UIBezierPath+FLUnits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+FLUnits.m"; sourceTree = "<group>"; };
+		113CC4C71E5593A600574F1D /* FLBezierView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLBezierView.h; sourceTree = "<group>"; };
+		113CC4C81E5593A600574F1D /* FLBezierView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLBezierView.m; sourceTree = "<group>"; };
 		3FE1AA521C45EDB300604EB4 /* FLPopoverPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPopoverPresentationController.h; sourceTree = "<group>"; };
 		3FE1AA531C45EDB300604EB4 /* FLPopoverPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPopoverPresentationController.m; sourceTree = "<group>"; };
 		3FFFC1DB1C44964F009E5F65 /* bezierCurveDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bezierCurveDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,8 +71,12 @@
 			children = (
 				3FFFC1E11C44964F009E5F65 /* AppDelegate.h */,
 				3FFFC1E21C44964F009E5F65 /* AppDelegate.m */,
+				113CC4C41E557C5300574F1D /* UIBezierPath+FLUnits.h */,
+				113CC4C51E557C5300574F1D /* UIBezierPath+FLUnits.m */,
 				3FFFC1E41C44964F009E5F65 /* ViewController.h */,
 				3FFFC1E51C44964F009E5F65 /* ViewController.m */,
+				113CC4C71E5593A600574F1D /* FLBezierView.h */,
+				113CC4C81E5593A600574F1D /* FLBezierView.m */,
 				3FFFC1F51C44970F009E5F65 /* FLBezierCurveView.h */,
 				3FFFC1F61C44970F009E5F65 /* FLBezierCurveView.m */,
 				3FE1AA521C45EDB300604EB4 /* FLPopoverPresentationController.h */,
@@ -162,6 +172,8 @@
 				3FFFC1E31C44964F009E5F65 /* AppDelegate.m in Sources */,
 				3FFFC1E01C44964F009E5F65 /* main.m in Sources */,
 				3FFFC1FA1C44D235009E5F65 /* FLAddProductController.m in Sources */,
+				113CC4C61E557C5300574F1D /* UIBezierPath+FLUnits.m in Sources */,
+				113CC4C91E5593A600574F1D /* FLBezierView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
