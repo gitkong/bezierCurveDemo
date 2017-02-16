@@ -28,8 +28,12 @@
     
     UIBezierPath.fl_bezierPath(^(FLBezierPathMaker *maker){
         maker.moveTo(100,80).addQuadCurveTo(CGPointMake(300, 80),CGPointMake(200, 20)).stroke(^(FLBezierLineInfo *infoMaker){
-            infoMaker.color([UIColor greenColor]).lineWidth(15).lineCapStyle(kCGLineCapSquare);
+            infoMaker.color([UIColor greenColor]).lineWidth(15).lineCapStyle(kCGLineCapButt);
         });
+    });
+    
+    UIBezierPath.fl_bezierPath(^(FLBezierPathMaker *maker){
+        maker.moveTo(300,80).addQuadCurveTo(CGPointMake(300, 160),CGPointMake(150, 120)).fill([UIColor grayColor]);
     });
     
 }

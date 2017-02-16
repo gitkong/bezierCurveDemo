@@ -137,59 +137,67 @@
     };
 }
 
+- (void (^)(UIColor *))fill{
+    return ^(UIColor *color){
+        [color setFill];
+        [self.path fill];
+    };
+}
+
 @end
 
 @implementation UIBezierPath (FLUnits)
 
-static FLBezierPathMaker *pathMaker = nil;
-
-//+ (void)setFl_be:(FLBezierPathMaker *)fl_be{
-//    if (fl_be != pathMaker) {
-//        pathMaker = fl_be;
-//    }
-//}
-//
-//+ (FLBezierPathMaker *)fl_be{
-//    if (pathMaker == nil) {
-//        UIBezierPath *path = [UIBezierPath bezierPath];
-//        FLBezierPathMaker *maker = [[FLBezierPathMaker alloc] init];
-//        maker.path = path;
-//        pathMaker = maker;
-//    }
-//    return pathMaker;
-//}
-
-+ (void (^)(void (^)(FLBezierPathMaker *)))fl_bezierPath{
-    void (^block)(void (^)(FLBezierPathMaker *)) = ^(void (^maker)(FLBezierPathMaker *)){
-        UIBezierPath *path = [UIBezierPath bezierPath];
-        FLBezierPathMaker *mk = [[FLBezierPathMaker alloc] init];
-        mk.path = path;
-        if (maker) {
-            maker(mk);
-        }
-    };
-    return block;
-}
-
-+ (FLBezierPathMaker *(^)(FLBezierPathMaker *))fl_bezier{
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    FLBezierPathMaker *(^block)(FLBezierPathMaker *) = ^(FLBezierPathMaker *pathMaker){
-        FLBezierPathMaker *maker = [[FLBezierPathMaker alloc] init];
-        maker.path = path;
-        
-        return maker;
-    };
-    return block;
-}
-
-+ (instancetype)fl_bezierPath:(void (^)(FLBezierPathMaker *))pathOperation{
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    FLBezierPathMaker *maker = [[FLBezierPathMaker alloc] init];
-    maker.path = path;
-    if (pathOperation) {
-        pathOperation(maker);
+UIBezierPath * FLCreatePathMaker(UIBezierPath *path,void (^maker)(FLBezierPathMaker *)){
+    FLBezierPathMaker *mk = [[FLBezierPathMaker alloc] init];
+    mk.path = path;
+    if (maker) {
+        maker(mk);
     }
     return path;
 }
+
++ (UIBezierPath * (^)(void (^)(FLBezierPathMaker *)))fl_bezierPath{
+    return ^(void (^maker)(FLBezierPathMaker *)){
+        return FLCreatePathMaker([UIBezierPath bezierPath],maker);
+    };
+}
+
++ (UIBezierPath * (^)(CGRect, void (^)(FLBezierPathMaker *)))fl_bezierPathWithRect{
+    return ^(CGRect rect,void (^maker)(FLBezierPathMaker *)){
+         return FLCreatePathMaker([UIBezierPath bezierPathWithRect:rect],maker);
+    };
+}
+
++ (UIBezierPath * (^)(CGRect, void (^)(FLBezierPathMaker *)))fl_bezierPathWithOvalInRect{
+    return ^(CGRect rect,void (^maker)(FLBezierPathMaker *)){
+         return FLCreatePathMaker([UIBezierPath bezierPathWithOvalInRect:rect],maker);
+    };
+}
+
++(UIBezierPath * (^)(CGRect, CGFloat, void (^)(FLBezierPathMaker *)))fl_bezierPathWithRoundedRect{
+    return ^(CGRect rect,CGFloat cornerRadius,void (^maker)(FLBezierPathMaker *)){
+         return FLCreatePathMaker([UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:cornerRadius],maker);
+    };
+}
+
++(UIBezierPath * (^)(CGRect, UIRectCorner, CGSize, void (^)(FLBezierPathMaker *)))fl_bezierPathWithRoundedRectByRoundingCorners{
+    return ^(CGRect rect,UIRectCorner corners,CGSize cornerRadii,void (^maker)(FLBezierPathMaker *)){
+         return FLCreatePathMaker([UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:corners cornerRadii:cornerRadii],maker);
+    };
+}
+
++(UIBezierPath * (^)(CGPoint, CGFloat, CGFloat, CGFloat, BOOL, void (^)(FLBezierPathMaker *)))fl_bezierPathWithArcCenter{
+    return ^(CGPoint center,CGFloat radius,CGFloat startAngle,CGFloat endAngle,BOOL clockwise,void (^maker)(FLBezierPathMaker *)){
+         return FLCreatePathMaker([UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:startAngle endAngle:endAngle clockwise:clockwise],maker);
+    };
+}
+
++ (UIBezierPath * (^)(CGPathRef, void (^)(FLBezierPathMaker *)))fl_bezierPathWithCGPath{
+    return ^(CGPathRef CGPath,void (^maker)(FLBezierPathMaker *)){
+        return FLCreatePathMaker([UIBezierPath bezierPathWithCGPath:CGPath],maker);
+    };
+}
+
 
 @end

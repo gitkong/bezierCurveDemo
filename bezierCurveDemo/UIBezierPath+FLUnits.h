@@ -77,18 +77,18 @@ typedef struct pathInfo{
 
 @interface UIBezierPath (FLUnits)
 
-@property (class,nonatomic,copy,readonly)void(^fl_bezierPath)(void(^maker)(FLBezierPathMaker *));
+@property (class,nonatomic,copy,readonly)UIBezierPath *(^fl_bezierPath)(void(^maker)(FLBezierPathMaker *));
 
-@property (class,nonatomic,copy,readonly)void(^fl_bezierPathWithRect)(CGRect rect,void(^maker)(FLBezierPathMaker *));
+@property (class,nonatomic,copy,readonly)UIBezierPath *(^fl_bezierPathWithRect)(CGRect rect,void(^maker)(FLBezierPathMaker *));
 
-@property (class,nonatomic,copy,readonly)void(^fl_bezierPathWithOvalInRect)(CGRect rect,void(^maker)(FLBezierPathMaker *));
+@property (class,nonatomic,copy,readonly)UIBezierPath *(^fl_bezierPathWithOvalInRect)(CGRect rect,void(^maker)(FLBezierPathMaker *));
 
-@property (class,nonatomic,copy,readonly)void(^bezierPathWithRoundedRect)(CGRect rect,CGFloat cornerRadius,void(^maker)(FLBezierPathMaker *));
+@property (class,nonatomic,copy,readonly)UIBezierPath *(^fl_bezierPathWithRoundedRect)(CGRect rect,CGFloat cornerRadius,void(^maker)(FLBezierPathMaker *));
 
-@property (class,nonatomic,copy,readonly)void(^bezierPathWithRoundedRectByRoundingCorners)(CGRect rect,UIRectCorner corners,CGSize cornerRadii,void(^maker)(FLBezierPathMaker *));
+@property (class,nonatomic,copy,readonly)UIBezierPath *(^fl_bezierPathWithRoundedRectByRoundingCorners)(CGRect rect,UIRectCorner corners,CGSize cornerRadii,void(^maker)(FLBezierPathMaker *));
 
-@property (class,nonatomic,copy,readonly)void(^bezierPathWithArcCenter)(CGPoint center,CGFloat radius,CGFloat startAngle,CGFloat endAngle,BOOL clockwise,void(^maker)(FLBezierPathMaker *));
+@property (class,nonatomic,copy,readonly)UIBezierPath *(^fl_bezierPathWithArcCenter)(CGPoint center,CGFloat radius,CGFloat startAngle,CGFloat endAngle,BOOL clockwise,void(^maker)(FLBezierPathMaker *));
 
-@property (class,nonatomic,copy,readonly)void(^bezierPathWithCGPath)(CGPathRef CGPath,void(^maker)(FLBezierPathMaker *));
+@property (class,nonatomic,copy,readonly)UIBezierPath *(^fl_bezierPathWithCGPath)(CGPathRef CGPath,void(^maker)(FLBezierPathMaker *));
 
 @end
