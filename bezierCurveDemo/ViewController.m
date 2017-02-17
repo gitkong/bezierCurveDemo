@@ -22,7 +22,8 @@
 //    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
 //    imageView.image = [UIImage imageNamed:@"banner"];
 //    [self.view addSubview:imageView];
-    FLBezierView *beView = [[FLBezierView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 300)];
+    FLBezierView *beView = [[FLBezierView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    beView.backgroundColor = [UIColor lightTextColor];
     [self.view addSubview:beView];
     
     
