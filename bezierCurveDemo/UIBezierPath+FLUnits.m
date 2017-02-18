@@ -12,79 +12,6 @@
 
 #import "UIBezierPath+FLUnits.h"
 
-@interface FLBezierLineInfo ()
-@property (nonatomic,weak)UIBezierPath *path;
-@property (nonatomic,strong)UIColor *currentLineColor;
-@end
-
-@implementation FLBezierLineInfo
-
-
-//- (FLBezierLineInfo *(^)(UIColor *))lineColor{
-//    return ^(UIColor *color){
-//        self.currentLineColor = color;
-//        return self;
-//    };
-//}
-//
-//- (FLBezierLineInfo *(^)(CGFloat))lineWidth{
-//    return ^(CGFloat lineWidth){
-//        self.path.lineWidth = lineWidth;
-//        return self;
-//    };
-//}
-//
-//- (FLBezierLineInfo *(^)(CGLineCap))lineCapStyle{
-//    return ^(CGLineCap lineCapStyle){
-//        self.path.lineCapStyle = lineCapStyle;
-//        return self;
-//    };
-//}
-//
-//- (FLBezierLineInfo *(^)(CGLineJoin))lineJoinStyle{
-//    return ^(CGLineJoin lineJoinStyle){
-//        self.path.lineJoinStyle = lineJoinStyle;
-//        return self;
-//    };
-//}
-//
-//- (FLBezierLineInfo *(^)(CGFloat))miterLimit{
-//    return ^(CGFloat miterLimit){
-//        self.path.miterLimit = miterLimit;
-//        return self;
-//    };
-//}
-//
-//- (FLBezierLineInfo *(^)(CGFloat))flatness{
-//    return ^(CGFloat flatness){
-//        self.path.flatness = flatness;
-//        return self;
-//    };
-//}
-//
-//- (FLBezierLineInfo *(^)(BOOL))usesEvenOddFillRule{
-//    return ^(BOOL usesEvenOddFillRule){
-//        self.path.usesEvenOddFillRule = usesEvenOddFillRule;
-//        return self;
-//    };
-//}
-//
-//- (FLBezierLineInfo *(^)(CGFloat *, NSInteger, CGFloat))setLineDash{
-//    return ^(CGFloat *pattern,NSInteger count,CGFloat phase){
-//        [self.path setLineDash:pattern count:count phase:phase];
-//        return self;
-//    };
-//}
-//
-//- (FLBezierLineInfo *(^)(CGFloat *, NSInteger *, CGFloat *))getLineDash{
-//    return ^(CGFloat *pattern,NSInteger *count,CGFloat *phase){
-//        [self.path getLineDash:pattern count:count phase:phase];
-//        return self;
-//    };
-//}
-
-@end
-
 @interface FLBezierPathMaker ()
 @property (nonatomic,weak)UIBezierPath *path;
 @property (nonatomic,strong)UIColor *currentLineColor;
@@ -96,7 +23,6 @@ CGFloat angle(CGFloat value){
     double pi = 3.14159265359;
     return (pi * value) / 180;
 }
-
 
 - (FLBezierPathMaker *(^)(UIColor *))color{
     return ^(UIColor *color){
@@ -204,6 +130,11 @@ CGFloat angle(CGFloat value){
     return self;
 }
 
+- (FLBezierPathMaker *)removeAllPoints{
+    [self.path removeAllPoints];
+    return self;
+}
+
 - (FLBezierPathMaker *(^)(UIBezierPath *))appendPath{
     return ^(UIBezierPath *path){
         [self.path appendPath:path];
@@ -211,43 +142,25 @@ CGFloat angle(CGFloat value){
     };
 }
 
-- (FLBezierPathMaker *)removeAllPoints{
-    [self.path removeAllPoints];
+- (FLBezierPathMaker *)reverse{
+    CGPoint reversePoint = [self.path bezierPathByReversingPath].currentPoint;
+    self.moveTo(reversePoint.x,reversePoint.y);
     return self;
 }
 
-//- (void (^)(void (^)(FLBezierLineInfo *lineInfo)))stroke{
-//    return ^(void (^lineInfoMaker)(FLBezierLineInfo *lineInfo)){
-//        if (lineInfoMaker) {
-//            FLBezierLineInfo *lineInfo = [[FLBezierLineInfo alloc] init];
-//            lineInfo.path = self.path;
-//            lineInfoMaker(lineInfo);
-//            if (lineInfo.lineColor) {
-//                [lineInfo.lineColor setStroke];
-//            }
-//            else{
-//                [[UIColor blackColor] setStroke];
-//            }
-//        }
-//        else{
-//            [[UIColor blackColor] setStroke];
-//        }
-//        [self.path stroke];
-//    };
-//}
+- (FLBezierPathMaker *(^)(CGAffineTransform))transform{
+    return ^(CGAffineTransform transform){
+        [self.path applyTransform:transform];
+        return self;
+    };
+}
 
-//- (UIBezierPath *)stroke{
-//    if (self.lineColor) {
-//        [self.lineColor setStroke];
-//    }
-//    else{
-//        [[UIColor blackColor] setStroke];
-//    }
-//    [self.path stroke];
-//    return self.path;
-//}
+- (FLBezierPathMaker *)addClip{
+    [self.path addClip];
+    return self;
+}
 
-- (void (^)())stroke{
+- (UIBezierPath * (^)())stroke{
     return ^{
         if (self.currentLineColor) {
             [self.currentLineColor setStroke];
@@ -256,10 +169,12 @@ CGFloat angle(CGFloat value){
             [[UIColor blackColor] setStroke];
         }
         [self.path stroke];
+        
+        return self.path;
     };
 }
 
-- (void (^)())fill{
+- (UIBezierPath * (^)())fill{
     return ^{
         if (self.currentLineColor) {
             [self.currentLineColor setFill];
@@ -268,6 +183,35 @@ CGFloat angle(CGFloat value){
             [[UIColor blackColor] setFill];
         }
         [self.path fill];
+        return self.path;
+    };
+}
+
+- (UIBezierPath *(^)(CGBlendMode, CGFloat))strokeWith{
+    return ^(CGBlendMode blendMode, CGFloat alpha){
+        if (self.currentLineColor) {
+            [self.currentLineColor setStroke];
+        }
+        else{
+            [[UIColor blackColor] setStroke];
+        }
+        [self.path strokeWithBlendMode:blendMode alpha:alpha];
+        
+        return self.path;
+    };
+}
+
+- (UIBezierPath *(^)(CGBlendMode, CGFloat))fillWith{
+    return ^(CGBlendMode blendMode, CGFloat alpha){
+        if (self.currentLineColor) {
+            [self.currentLineColor setFill];
+        }
+        else{
+            [[UIColor blackColor] setFill];
+        }
+        [self.path fillWithBlendMode:blendMode alpha:alpha];
+        
+        return self.path;
     };
 }
 
@@ -288,70 +232,44 @@ static FLBezierPathMaker *_maker = nil;
 UIBezierPath * FLCreatePath(UIBezierPath *path){
     FLBezierPathMaker *mk = [[FLBezierPathMaker alloc] init];
     mk.path = path;
-    // 存储当前的FLBezierPathMaker
     _maker = mk;
     return path;
 }
 
-UIBezierPath * FLCreatePathMaker(UIBezierPath *path,void (^makeOperation)(FLBezierPathMaker *)){
-    // 初始化 中间类 对象
-    FLBezierPathMaker *mk = [[FLBezierPathMaker alloc] init];
-    mk.path = path;
-    // 实现传递过来 makeOperation，并传出参数：FLBezierPathMaker 对象
-    if (makeOperation) {
-        makeOperation(mk);
-    }
-    // 存储当前的 FLBezierPathMaker 对象
-    _maker = mk;
-    return path;
-}
 
-+ (UIBezierPath * (^)(void (^)(FLBezierPathMaker *)))fl_bezierPath{
-    /**
-     *  @author gitKong
-     *
-     *  类属性需要调用者手动实现 getter 方法
-     */
-    return ^(void (^makeOperation)(FLBezierPathMaker *)){
-        // 传递参数，返回 UIBezierPath 对象
-        return FLCreatePathMaker([UIBezierPath bezierPath],makeOperation);
++ (UIBezierPath * (^)(CGRect))fl_rect{
+    return ^(CGRect rect){
+         return FLCreatePath([UIBezierPath bezierPathWithRect:rect]);
     };
 }
 
-
-+ (UIBezierPath * (^)(CGRect, void (^)(FLBezierPathMaker *)))fl_rect{
-    return ^(CGRect rect,void (^maker)(FLBezierPathMaker *)){
-         return FLCreatePathMaker([UIBezierPath bezierPathWithRect:rect],maker);
++ (UIBezierPath * (^)(CGRect))fl_ovalInRect{
+    return ^(CGRect rect){
+         return FLCreatePath([UIBezierPath bezierPathWithOvalInRect:rect]);
     };
 }
 
-+ (UIBezierPath * (^)(CGRect, void (^)(FLBezierPathMaker *)))fl_ovalInRect{
-    return ^(CGRect rect,void (^maker)(FLBezierPathMaker *)){
-         return FLCreatePathMaker([UIBezierPath bezierPathWithOvalInRect:rect],maker);
++(UIBezierPath * (^)(CGRect, CGFloat))fl_roundedRect{
+    return ^(CGRect rect,CGFloat cornerRadius){
+         return FLCreatePath([UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:cornerRadius]);
     };
 }
 
-+(UIBezierPath * (^)(CGRect, CGFloat, void (^)(FLBezierPathMaker *)))fl_roundedRect{
-    return ^(CGRect rect,CGFloat cornerRadius,void (^maker)(FLBezierPathMaker *)){
-         return FLCreatePathMaker([UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:cornerRadius],maker);
++(UIBezierPath * (^)(CGRect, UIRectCorner, CGSize))fl_roundingCorners{
+    return ^(CGRect rect,UIRectCorner corners,CGSize cornerRadii){
+         return FLCreatePath([UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:corners cornerRadii:cornerRadii]);
     };
 }
 
-+(UIBezierPath * (^)(CGRect, UIRectCorner, CGSize, void (^)(FLBezierPathMaker *)))fl_roundingCorners{
-    return ^(CGRect rect,UIRectCorner corners,CGSize cornerRadii,void (^maker)(FLBezierPathMaker *)){
-         return FLCreatePathMaker([UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:corners cornerRadii:cornerRadii],maker);
++(UIBezierPath * (^)(CGPoint, CGFloat, CGFloat, CGFloat, BOOL))fl_arcCenter{
+    return ^(CGPoint center,CGFloat radius,CGFloat startAngle,CGFloat endAngle,BOOL clockwise){
+         return FLCreatePath([UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:angle(startAngle) endAngle:angle(endAngle) clockwise:clockwise]);
     };
 }
 
-+(UIBezierPath * (^)(CGPoint, CGFloat, CGFloat, CGFloat, BOOL, void (^)(FLBezierPathMaker *)))fl_arcCenter{
-    return ^(CGPoint center,CGFloat radius,CGFloat startAngle,CGFloat endAngle,BOOL clockwise,void (^maker)(FLBezierPathMaker *)){
-         return FLCreatePathMaker([UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:angle(startAngle) endAngle:angle(endAngle) clockwise:clockwise],maker);
-    };
-}
-
-+ (UIBezierPath * (^)(CGPathRef, void (^)(FLBezierPathMaker *)))fl_CGPath{
-    return ^(CGPathRef CGPath,void (^maker)(FLBezierPathMaker *)){
-        return FLCreatePathMaker([UIBezierPath bezierPathWithCGPath:CGPath],maker);
++ (UIBezierPath * (^)(CGPathRef))fl_CGPath{
+    return ^(CGPathRef CGPath){
+        return FLCreatePath([UIBezierPath bezierPathWithCGPath:CGPath]);
     };
 }
 

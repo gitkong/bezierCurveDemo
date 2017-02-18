@@ -21,7 +21,16 @@
 //        maker.moveTo(0,20).addLineTo(30,50).stroke();
 //    });
     
-    UIBezierPath.fl_path.maker.moveTo(0,20).addLineTo(30,50).stroke();
+    UIBezierPath.fl_path.maker.moveTo(0,20).addLineTo(30,50).appendPath(UIBezierPath.fl_path.maker.moveTo(40,60).addLineTo(100,30).color(UIColor.redColor).stroke()).stroke();
+    
+    
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(0, 20)];
+    [path addLineToPoint:CGPointMake(30, 50)];
+    [path stroke];
+    [path bezierPathByReversingPath];
+    
+    NSLog(@"system = %@",NSStringFromCGPoint([path bezierPathByReversingPath].currentPoint));
     
 //    UIBezierPath.fl_path(^(FLBezierPathMaker *maker){
 //        maker.moveTo(0,20).addLineTo(30,50).stroke(^(FLBezierLineInfo *infoMaker){
@@ -35,8 +44,15 @@
 //        infoMaker.color([UIColor redColor]).lineWidth(5).lineCapStyle(kCGLineCapRound).lineJoinStyle(kCGLineJoinMiter);
 //    });
     
-    
-    UIBezierPath.fl_path.maker.moveTo(90,200).addLineTo(200,200).addLineTo(130,300).addLineTo(130,450).addLineTo(90,380).addLineTo(250,200).addLineTo(250,450).addLineTo(300,450).addLineTo(300,380).lineWidth(7).lineCapStyle(kCGLineCapRound).lineJoinStyle(kCGLineJoinRound).color(UIColor.redColor).stroke();
+    NSLog(@"%@",NSStringFromCGPoint(UIBezierPath.fl_path.maker.moveTo(90,200).addLineTo(200,200).addLineTo(130,300).addLineTo(130,450).addLineTo(90,380).addLineTo(250,200).addLineTo(250,450).addLineTo(300,450).addLineTo(300,380).lineWidth(7).lineCapStyle(kCGLineCapRound).lineJoinStyle(kCGLineJoinRound).color(UIColor.redColor).stroke().currentPoint));
+    /**
+     *  @author gitKong
+     *
+     *  因为x-code 不提示，我最快的方法只能通过去h文件copy过来填写，参数太多，而且参数还带个block，太麻烦
+     */
+//    UIBezierPath.fl_arcCenter(CGPointMake(30, 30),30,0,60,YES,^(FLBezierPathMaker *maker){
+//        maker.moveTo(0,20).addLineTo(30,50).stroke();
+//    });
     
 //    UIBezierPath.fl_path(^(FLBezierPathMaker *maker){
 //        maker.moveTo(30,50).addLineTo(100,80).stroke(^(FLBezierLineInfo *infoMaker){
